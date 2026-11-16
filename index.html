@@ -1,1089 +1,687 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Carta de Amor Interactiva</title>
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts: Dancing Script (manuscrita), Lora (editorial romántica) e Inter -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600;700&family=Inter:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>7 Días de Cartas Para Ti 💌</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Lora:ital,wght@0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Carga tus mensajes y configuración -->
+  <script src="cartas-data.js"></script>
   <style>
-    /* Variables dinámicas por tema */
     :root {
-      --bg-gradient-1: #fff0f5;
-      --bg-gradient-2: #ffe4e9;
-      --bg-gradient-3: #ffd6e0;
-      --env-body: #f8a5c2;
-      --env-flap: #f78fb3;
-      --env-left: #f3a6c0;
-      --env-right: #ee96b4;
-      --env-bottom: #f59bb9;
-      --env-shadow: rgba(214, 51, 108, 0.28);
+      --bg-gradient: linear-gradient(135deg, #fff0f3 0%, #ffe3e8 50%, #ffd1dc 100%);
+      --env-body: #ff8fa3;
+      --env-flap: #ff758f;
+      --env-pocket: #ffb3c1;
+      --env-pocket-dark: #ff9eb0;
       --seal-color: #c9184a;
-      --seal-highlight: #ff4d6d;
       --paper-bg: #fffdf9;
-      --paper-border: #f3d5df;
-      --ink-primary: #4a1525;
-      --ink-accent: #c9184a;
-      --particle-color: #ff4d6d;
+      --text-main: #4a2532;
+      --accent: #c9184a;
+      --shadow-color: rgba(201, 24, 74, 0.22);
     }
 
-    /* Tema: Rosa Romántico */
-    [data-theme="rose"] {
-      --bg-gradient-1: #fff0f5;
-      --bg-gradient-2: #ffe3ec;
-      --bg-gradient-3: #ffccd5;
-      --env-body: #f48fb1;
-      --env-flap: #ec407a;
-      --env-left: #f06292;
-      --env-right: #e91e63;
-      --env-bottom: #f48fb1;
-      --env-shadow: rgba(233, 30, 99, 0.25);
-      --seal-color: #ad1457;
-      --seal-highlight: #f06292;
-      --paper-bg: #fffcfc;
-      --paper-border: #f8bbd0;
-      --ink-primary: #4a0e24;
-      --ink-accent: #c2185b;
-      --particle-color: #ec407a;
-    }
-
-    /* Tema: Crema Vintage & Lacre Rojo */
     [data-theme="vintage"] {
-      --bg-gradient-1: #fdf8f0;
-      --bg-gradient-2: #f7ebd9;
-      --bg-gradient-3: #eedbc0;
-      --env-body: #e6d2b5;
-      --env-flap: #d5bc98;
-      --env-left: #dec7a6;
-      --env-right: #d4ba96;
-      --env-bottom: #e2ccb0;
-      --env-shadow: rgba(120, 85, 45, 0.25);
-      --seal-color: #9e1b1b;
-      --seal-highlight: #d32f2f;
-      --paper-bg: #fcf9f2;
-      --paper-border: #e0cfb6;
-      --ink-primary: #3b2818;
-      --ink-accent: #9e1b1b;
-      --particle-color: #c62828;
+      --bg-gradient: linear-gradient(135deg, #f7efe5 0%, #efe1d1 50%, #e4d0b8 100%);
+      --env-body: #c8a986;
+      --env-flap: #b5926b;
+      --env-pocket: #d9bfa0;
+      --env-pocket-dark: #cbb090;
+      --seal-color: #8b2635;
+      --paper-bg: #fcf8f0;
+      --text-main: #3e2c23;
+      --accent: #8b2635;
+      --shadow-color: rgba(62, 44, 35, 0.22);
     }
 
-    /* Tema: Lavanda Mágico */
     [data-theme="lavender"] {
-      --bg-gradient-1: #f8f5ff;
-      --bg-gradient-2: #ede4ff;
-      --bg-gradient-3: #dfd0ff;
-      --env-body: #b39ddb;
-      --env-flap: #9575cd;
-      --env-left: #a68ed6;
-      --env-right: #8e6cc7;
-      --env-bottom: #b39ddb;
-      --env-shadow: rgba(103, 58, 183, 0.24);
-      --seal-color: #5e35b1;
-      --seal-highlight: #9575cd;
-      --paper-bg: #fcfaff;
-      --paper-border: #d1c4e9;
-      --ink-primary: #2c1654;
-      --ink-accent: #5e35b1;
-      --particle-color: #7e57c2;
+      --bg-gradient: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 50%, #d8b4fe 100%);
+      --env-body: #a855f7;
+      --env-flap: #9333ea;
+      --env-pocket: #c084fc;
+      --env-pocket-dark: #b06ef8;
+      --seal-color: #6b21a8;
+      --paper-bg: #fdfaff;
+      --text-main: #3b0764;
+      --accent: #7e22ce;
+      --shadow-color: rgba(107, 33, 168, 0.22);
     }
 
-    /* Tema: Medianoche Dorado */
     [data-theme="midnight"] {
-      --bg-gradient-1: #0f172a;
-      --bg-gradient-2: #1e1b4b;
-      --bg-gradient-3: #2e1065;
-      --env-body: #1e293b;
-      --env-flap: #334155;
-      --env-left: #263347;
-      --env-right: #1a2436;
-      --env-bottom: #283548;
-      --env-shadow: rgba(251, 191, 36, 0.22);
-      --seal-color: #b45309;
-      --seal-highlight: #fbbf24;
-      --paper-bg: #fffdf5;
-      --paper-border: #fde68a;
-      --ink-primary: #1e293b;
-      --ink-accent: #b45309;
-      --particle-color: #fbbf24;
+      --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #311042 100%);
+      --env-body: #334155;
+      --env-flap: #1e293b;
+      --env-pocket: #475569;
+      --env-pocket-dark: #3b485c;
+      --seal-color: #d97706;
+      --paper-bg: #fffbeb;
+      --text-main: #1e293b;
+      --accent: #b45309;
+      --shadow-color: rgba(0, 0, 0, 0.45);
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: 'Inter', sans-serif;
-      background: radial-gradient(circle at 50% 35%, var(--bg-gradient-1), var(--bg-gradient-2) 55%, var(--bg-gradient-3));
       min-height: 100vh;
+      background: var(--bg-gradient);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       overflow-x: hidden;
-      transition: background 0.7s ease;
+      padding: 1.5rem 1rem;
+      transition: background 0.6s ease;
     }
 
-    .font-handwriting {
-      font-family: 'Dancing Script', cursive;
+    #particles-container {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1;
     }
 
-    .font-serif-romantic {
-      font-family: 'Lora', serif;
+    .floating-heart {
+      position: absolute;
+      bottom: -40px;
+      animation: floatUp linear forwards;
+      opacity: 0;
+      user-select: none;
     }
 
-    /* Escenario 3D del Sobre */
-    .envelope-stage {
-      perspective: 1400px;
-      width: min(92vw, 440px);
-      height: min(62vw, 290px);
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(0.6) rotate(0deg); opacity: 0; }
+      15% { opacity: 0.85; }
+      85% { opacity: 0.85; }
+      100% { transform: translateY(-105vh) scale(1.2) rotate(25deg); opacity: 0; }
+    }
+
+    .day-nav {
       position: relative;
-      margin: 0 auto;
-      transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.65rem;
+      margin-bottom: 1.5rem;
     }
 
-    .envelope-stage:not(.is-open):hover {
-      transform: translateY(-6px) scale(1.015);
+    .day-badge-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.85rem;
+      color: var(--accent);
+      text-shadow: 0 2px 10px rgba(255,255,255,0.4);
     }
 
-    /* Desplazar el sobre ligeramente hacia abajo cuando se abre para dar espacio a la carta */
-    .envelope-stage.is-open {
-      transform: translateY(115px);
+    [data-theme="midnight"] .day-badge-title { color: #fbbf24; }
+
+    .days-pills {
+      display: flex;
+      gap: 0.45rem;
+      flex-wrap: wrap;
+      justify-content: center;
     }
 
-    @media (max-width: 480px) {
-      .envelope-stage.is-open {
-        transform: translateY(130px);
-      }
+    .day-pill {
+      padding: 0.4rem 0.85rem;
+      border-radius: 999px;
+      border: 1.5px solid rgba(255, 255, 255, 0.7);
+      background: rgba(255, 255, 255, 0.55);
+      backdrop-filter: blur(8px);
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .day-pill.active {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px var(--shadow-color);
+    }
+
+    .day-pill.locked {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .stage {
+      position: relative;
+      z-index: 5;
+      width: 100%;
+      max-width: 440px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 2.5rem;
     }
 
     .envelope-wrapper {
       position: relative;
-      width: 100%;
-      height: 100%;
-      transform-style: preserve-3d;
-      border-radius: 14px;
-      box-shadow: 0 24px 48px -12px var(--env-shadow), 0 8px 20px -6px rgba(0, 0, 0, 0.12);
-      background-color: var(--env-body);
+      width: 340px;
+      height: 230px;
+      perspective: 1200px;
       cursor: pointer;
-      transition: background-color 0.5s ease, box-shadow 0.5s ease;
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    /* Interior del sobre (fondo oscuro sutil) */
+    .envelope-wrapper:not(.open):hover {
+      transform: translateY(-8px) scale(1.02);
+    }
+
     .envelope-back {
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, rgba(0, 0, 0, 0.18) 0%, rgba(0, 0, 0, 0.04) 100%);
-      border-radius: 14px;
-      z-index: 1;
+      background: var(--env-body);
+      border-radius: 12px;
+      box-shadow: 0 22px 45px var(--shadow-color);
     }
 
-    /* Carta interior */
-    .letter-card {
+    .letter {
       position: absolute;
-      left: 5%;
-      right: 5%;
-      bottom: 6%;
-      height: 88%;
+      left: 14px;
+      right: 14px;
+      bottom: 12px;
+      height: 205px;
       background: var(--paper-bg);
-      border: 1px solid var(--paper-border);
       border-radius: 10px;
-      padding: 1.5rem 1.6rem;
+      padding: 1.4rem 1.3rem;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      transition: all 0.85s cubic-bezier(0.22, 1, 0.36, 1);
       z-index: 2;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-      transform: translateY(0) scale(0.96);
-      opacity: 0.95;
-      transition:
-        transform 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.25s,
-        height 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.25s,
-        box-shadow 0.85s ease 0.25s,
-        z-index 0s linear 0.35s;
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      color: var(--ink-primary);
+    }
+
+    .envelope-wrapper.open .letter {
+      height: auto;
+      min-height: 410px;
+      max-height: 72vh;
+      width: 92vw;
+      max-width: 480px;
+      left: 50%;
+      bottom: -35px;
+      transform: translateX(-50%) translateY(-55px);
+      z-index: 20;
+      overflow-y: auto;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(0, 0, 0, 0.06);
       cursor: default;
     }
 
-    /* Textura sutil de papel */
-    .letter-card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-image: radial-gradient(rgba(0, 0, 0, 0.025) 1px, transparent 0);
-      background-size: 16px 16px;
-      pointer-events: none;
+    .letter-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px dashed rgba(0, 0, 0, 0.12);
+      padding-bottom: 0.5rem;
+      margin-bottom: 0.85rem;
     }
 
-    /* Estado abierto: la carta sale del sobre y se expande */
-    .envelope-stage.is-open .letter-card {
-      transform: translateY(-145px) scale(1.04);
-      height: 360px;
-      z-index: 6;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-      overflow-y: auto;
+    .letter-day-tag {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
     }
 
-    @media (max-width: 480px) {
-      .envelope-stage.is-open .letter-card {
-        transform: translateY(-155px) scale(1.03);
-        height: 345px;
-        padding: 1.25rem 1.2rem;
-      }
+    .close-letter-btn {
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      color: var(--text-main);
+      opacity: 0.5;
+      cursor: pointer;
+      display: none;
     }
 
-    /* Scrollbar elegante dentro de la carta */
-    .letter-card::-webkit-scrollbar {
-      width: 5px;
-    }
-    .letter-card::-webkit-scrollbar-thumb {
-      background: var(--paper-border);
-      border-radius: 9999px;
+    .envelope-wrapper.open .close-letter-btn { display: block; }
+    .close-letter-btn:hover { opacity: 1; }
+
+    .letter-greeting {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.75rem;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
     }
 
-    /* Solapas frontales del sobre (izquierda, derecha, inferior) */
+    .polaroid-frame {
+      background: #ffffff;
+      padding: 0.55rem 0.55rem 1.2rem 0.55rem;
+      border-radius: 6px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      margin: 0.5rem auto 1rem auto;
+      width: 100%;
+      max-width: 280px;
+      transform: rotate(-1.5deg);
+      transition: transform 0.3s ease;
+    }
+
+    .polaroid-frame:hover {
+      transform: rotate(0deg) scale(1.02);
+    }
+
+    .polaroid-frame img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 4px;
+      display: block;
+    }
+
+    .polaroid-caption {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.1rem;
+      text-align: center;
+      color: #555;
+      margin-top: 0.45rem;
+    }
+
+    .letter-body {
+      font-family: 'Lora', serif;
+      font-size: 1rem;
+      line-height: 1.72;
+      color: var(--text-main);
+      white-space: pre-line;
+      margin-bottom: 1.2rem;
+    }
+
+    .letter-signature {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.6rem;
+      color: var(--accent);
+      text-align: right;
+      margin-top: auto;
+    }
+
     .envelope-pocket {
       position: absolute;
       inset: 0;
       z-index: 3;
       pointer-events: none;
-      border-radius: 14px;
+      border-radius: 12px;
       overflow: hidden;
     }
 
-    .pocket-left {
+    .envelope-pocket::before {
+      content: '';
       position: absolute;
       inset: 0;
-      background-color: var(--env-left);
-      clip-path: polygon(0 0, 52% 52%, 0 100%);
-      transition: background-color 0.5s ease;
+      background: linear-gradient(135deg, var(--env-pocket) 50%, var(--env-pocket-dark) 50%);
+      clip-path: polygon(0 0, 50% 54%, 100% 0, 100% 100%, 0 100%);
     }
 
-    .pocket-right {
-      position: absolute;
-      inset: 0;
-      background-color: var(--env-right);
-      clip-path: polygon(100% 0, 48% 52%, 100% 100%);
-      transition: background-color 0.5s ease;
-    }
-
-    .pocket-bottom {
-      position: absolute;
-      inset: 0;
-      background-color: var(--env-bottom);
-      clip-path: polygon(0 100%, 50% 46%, 100% 100%);
-      filter: drop-shadow(0 -3px 6px rgba(0, 0, 0, 0.08));
-      transition: background-color 0.5s ease;
-    }
-
-    /* Solapa superior triangular que rota en 3D */
     .envelope-flap {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
-      height: 58%;
-      background-color: var(--env-flap);
+      height: 130px;
+      background: var(--env-flap);
       clip-path: polygon(0 0, 100% 0, 50% 100%);
       transform-origin: top center;
-      transform: rotateX(0deg);
+      transition: transform 0.65s cubic-bezier(0.4, 0, 0.2, 1), z-index 0.2s 0.3s;
       z-index: 4;
-      transition:
-        transform 0.65s cubic-bezier(0.4, 0, 0.2, 1),
-        z-index 0s linear 0.32s,
-        background-color 0.5s ease;
-      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.12));
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
     }
 
-    .envelope-stage.is-open .envelope-flap {
+    .envelope-wrapper.open .envelope-flap {
       transform: rotateX(180deg);
       z-index: 1;
     }
 
-    /* Sello de lacre en forma de corazón */
     .wax-seal {
       position: absolute;
-      top: 52%;
+      top: 98px;
       left: 50%;
-      transform: translate(-50%, -50%) scale(1);
-      width: 66px;
-      height: 66px;
+      transform: translate(-50%, -50%);
+      width: 54px;
+      height: 54px;
+      background: var(--seal-color);
       border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, var(--seal-highlight), var(--seal-color) 70%);
-      box-shadow:
-        0 6px 14px rgba(0, 0, 0, 0.28),
-        inset 0 2px 4px rgba(255, 255, 255, 0.35),
-        inset 0 -3px 6px rgba(0, 0, 0, 0.35);
       z-index: 5;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition:
-        opacity 0.35s ease,
-        transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
-        background 0.5s ease;
-      animation: sealPulse 2.8s infinite ease-in-out;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3), inset 0 2px 4px rgba(255, 255, 255, 0.35);
+      transition: opacity 0.35s ease, transform 0.35s ease;
     }
 
-    .wax-seal::after {
-      content: "";
-      position: absolute;
-      inset: 5px;
-      border-radius: 50%;
-      border: 1.5px dashed rgba(255, 255, 255, 0.35);
-      pointer-events: none;
+    .wax-seal span {
+      font-size: 1.5rem;
+      color: #fff;
+      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3));
     }
 
-    .envelope-stage.is-open .wax-seal {
+    .envelope-wrapper.open .wax-seal {
       opacity: 0;
       transform: translate(-50%, -50%) scale(0.4);
       pointer-events: none;
-      animation: none;
     }
 
-    @keyframes sealPulse {
-      0%, 100% {
-        transform: translate(-50%, -50%) scale(1);
-      }
-      50% {
-        transform: translate(-50%, -50%) scale(1.07);
-      }
+    .tap-hint {
+      margin-top: 1.4rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      opacity: 0.8;
+      animation: pulse 2s infinite;
     }
 
-    /* Etiqueta frontal del destinatario en el sobre cerrado */
-    .envelope-front-label {
-      position: absolute;
-      bottom: 14%;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 4;
-      background: rgba(255, 255, 255, 0.82);
-      backdrop-filter: blur(4px);
-      padding: 0.3rem 1.1rem;
-      border-radius: 9999px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-      transition: opacity 0.3s ease;
-      max-width: 82%;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      pointer-events: none;
+    [data-theme="midnight"] .tap-hint { color: #f8fafc; }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.75; }
+      50% { transform: scale(1.04); opacity: 1; }
     }
 
-    .envelope-stage.is-open .envelope-front-label {
-      opacity: 0;
+    .reopen-welcome-btn {
+      margin-top: 1.5rem;
+      background: rgba(255, 255, 255, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      padding: 0.45rem 1rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      color: var(--text-main);
+      cursor: pointer;
+      backdrop-filter: blur(6px);
+      transition: background 0.2s;
+      z-index: 10;
     }
 
-    /* Partículas flotantes de fondo */
-    .floating-particle {
+    .reopen-welcome-btn:hover { background: rgba(255, 255, 255, 0.9); }
+
+    .welcome-overlay {
       position: fixed;
-      pointer-events: none;
-      z-index: 0;
-      animation: floatUp linear forwards;
-      color: var(--particle-color);
+      inset: 0;
+      background: rgba(25, 10, 18, 0.65);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.25rem;
       opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.45s ease;
     }
 
-    @keyframes floatUp {
-      0% {
-        transform: translateY(20px) scale(0.6) rotate(0deg);
-        opacity: 0;
-      }
-      15% {
-        opacity: 0.75;
-      }
-      85% {
-        opacity: 0.6;
-      }
-      100% {
-        transform: translateY(-105vh) scale(1.15) rotate(25deg);
-        opacity: 0;
-      }
+    .welcome-overlay.visible {
+      opacity: 1;
+      pointer-events: auto;
     }
 
-    /* Efecto de brillo sutil */
-    .shimmer-hint {
-      animation: gentleFloat 2.4s ease-in-out infinite;
+    .welcome-card {
+      background: #fffdf9;
+      max-width: 440px;
+      width: 100%;
+      border-radius: 20px;
+      padding: 2.2rem 1.8rem;
+      text-align: center;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+      border: 2px solid #ffd1dc;
+      transform: translateY(20px) scale(0.96);
+      transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    @keyframes gentleFloat {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-4px); }
+    .welcome-overlay.visible .welcome-card {
+      transform: translateY(0) scale(1);
+    }
+
+    .welcome-icon {
+      font-size: 2.8rem;
+      margin-bottom: 0.75rem;
+      display: inline-block;
+      animation: pulse 2s infinite;
+    }
+
+    .welcome-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2rem;
+      color: var(--accent);
+      margin-bottom: 0.85rem;
+    }
+
+    .welcome-message {
+      font-family: 'Lora', serif;
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: #4a2532;
+      margin-bottom: 1.6rem;
+      white-space: pre-line;
+    }
+
+    .welcome-btn {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 0.85rem 1.8rem;
+      border-radius: 999px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      box-shadow: 0 8px 20px var(--shadow-color);
+      transition: transform 0.2s, filter 0.2s;
+    }
+
+    .welcome-btn:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.08);
     }
   </style>
 </head>
-<body data-theme="rose" class="flex flex-col justify-between min-h-screen relative selection:bg-pink-200 selection:text-pink-900">
+<body>
 
-  <!-- Contenedor de partículas flotantes -->
-  <div id="particles-container" class="fixed inset-0 pointer-events-none overflow-hidden z-0"></div>
+  <div id="particles-container"></div>
 
-  <!-- Barra superior -->
-  <header class="relative z-20 w-full max-w-5xl mx-auto px-4 pt-5 pb-2 flex items-center justify-between">
-    <div class="flex items-center gap-2">
-      <span id="brand-badge" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-white/80 backdrop-blur-md text-slate-700 shadow-sm border border-white/60">
-        <svg class="w-3.5 h-3.5 text-rose-500 fill-current" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-        <span>Cartas de Amor</span>
-      </span>
+  <!-- Modal de Bienvenida (Primera vez) -->
+  <div class="welcome-overlay" id="welcomeOverlay">
+    <div class="welcome-card">
+      <div class="welcome-icon">💌</div>
+      <h2 class="welcome-title" id="welcomeTitle">Para ti, mi bella dama</h2>
+      <p class="welcome-message" id="welcomeText"></p>
+      <button class="welcome-btn" id="startExperienceBtn">Ver mi carta de hoy ✨</button>
     </div>
-
-    <div class="flex items-center gap-2">
-      <!-- Botón principal de personalización -->
-      <button
-        id="btn-open-editor"
-        type="button"
-        class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium bg-white/90 hover:bg-white text-slate-800 shadow-md hover:shadow-lg border border-white transition-all active:scale-95 cursor-pointer"
-      >
-        <svg class="w-4 h-4 text-rose-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-        </svg>
-        <span>Crear / Editar Carta</span>
-      </button>
-
-      <!-- Botón discreto cuando se abre desde un enlace compartido -->
-      <button
-        id="btn-create-own"
-        type="button"
-        class="hidden inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium bg-white/75 hover:bg-white text-slate-700 shadow-sm border border-white/60 backdrop-blur-md transition-all active:scale-95 cursor-pointer"
-      >
-        <svg class="w-3.5 h-3.5 text-rose-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-        </svg>
-        <span>Crear la mía</span>
-      </button>
-    </div>
-  </header>
-
-  <!-- Escenario Principal -->
-  <main class="relative z-10 flex-1 flex flex-col items-center justify-center px-4 py-8">
-
-    <!-- Indicador superior -->
-    <p id="stage-hint" class="shimmer-hint mb-8 px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium bg-white/75 backdrop-blur-sm text-slate-700 shadow-sm border border-white/50 transition-opacity duration-300">
-      Toca el sello de corazón para abrir tu carta ✨
-    </p>
-
-    <!-- Sobre 3D -->
-    <div id="envelope-stage" class="envelope-stage" role="button" tabindex="0" aria-label="Abrir o cerrar carta de amor">
-      <div class="envelope-wrapper">
-        <!-- Interior oscuro del sobre -->
-        <div class="envelope-back"></div>
-
-        <!-- Papel de la carta -->
-        <article id="letter-paper" class="letter-card" onclick="event.stopPropagation()">
-          <div>
-            <div class="flex items-start justify-between gap-2 border-b pb-2.5 mb-3" style="border-color: var(--paper-border);">
-              <div>
-                <p class="text-xs uppercase tracking-widest opacity-60 font-medium">Para</p>
-                <h2 id="display-recipient" class="font-handwriting text-2xl sm:text-3xl font-bold" style="color: var(--ink-accent);">
-                  Mi persona favorita
-                </h2>
-              </div>
-              <button
-                id="btn-close-letter"
-                type="button"
-                title="Cerrar carta"
-                class="p-1.5 rounded-full hover:bg-black/5 transition-colors text-slate-500 hover:text-slate-800 cursor-pointer"
-              >
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-
-            <h3 id="display-title" class="font-serif-romantic italic font-semibold text-base sm:text-lg mb-2.5" style="color: var(--ink-accent);">
-              Un pequeño recordatorio de cuánto te quiero
-            </h3>
-
-            <p id="display-message" class="font-serif-romantic text-sm sm:text-[15px] leading-relaxed whitespace-pre-line opacity-90">
-              Desde que llegaste a mi vida, cada día tiene un brillo especial. Gracias por cada sonrisa, por tu compañía y por hacer que los momentos más simples se vuelvan inolvidables.
-
-Siempre voy a estar aquí para ti.
-            </p>
-          </div>
-
-          <div class="mt-5 pt-3 border-t flex items-end justify-between" style="border-color: var(--paper-border);">
-            <span class="text-xs opacity-50 italic">Con todo mi corazón</span>
-            <p id="display-sender" class="font-handwriting text-xl sm:text-2xl font-semibold text-right" style="color: var(--ink-accent);">
-              Con cariño, Alguien que te adora
-            </p>
-          </div>
-        </article>
-
-        <!-- Bolsillo frontal del sobre -->
-        <div class="envelope-pocket">
-          <div class="pocket-left"></div>
-          <div class="pocket-right"></div>
-          <div class="pocket-bottom"></div>
-        </div>
-
-        <!-- Etiqueta rápida en el frente del sobre -->
-        <div class="envelope-front-label">
-          <span class="text-xs text-slate-500 mr-1">Para:</span>
-          <span id="envelope-label-name" class="font-handwriting text-lg font-bold text-slate-800">Mi persona favorita</span>
-        </div>
-
-        <!-- Solapa superior 3D -->
-        <div class="envelope-flap"></div>
-
-        <!-- Sello de lacre en forma de corazón -->
-        <div class="wax-seal" aria-hidden="true">
-          <svg class="w-8 h-8 text-white drop-shadow" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-          </svg>
-        </div>
-      </div>
-    </div>
-
-    <!-- Botón de acción inferior (Cerrar / Guardar o Compartir rápido) -->
-    <div id="bottom-controls" class="mt-12 flex flex-wrap items-center justify-center gap-3 transition-all duration-500">
-      <button
-        id="btn-toggle-envelope"
-        type="button"
-        class="px-5 py-2.5 rounded-full text-sm font-medium bg-white/85 hover:bg-white text-slate-800 shadow-md border border-white/70 transition-all active:scale-95 cursor-pointer"
-      >
-        Abrir carta
-      </button>
-
-      <button
-        id="btn-quick-share"
-        type="button"
-        class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium bg-rose-600 hover:bg-rose-700 text-white shadow-md hover:shadow-lg transition-all active:scale-95 cursor-pointer"
-      >
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
-        </svg>
-        <span>Copiar enlace de mi carta</span>
-      </button>
-    </div>
-  </main>
-
-  <!-- Pie de página discreto -->
-  <footer class="relative z-10 text-center py-3 text-xs text-slate-500/80">
-    Hecho con amor • Toca el sobre para abrir o guardar
-  </footer>
-
-  <!-- Panel Lateral / Modal de Personalización -->
-  <div id="editor-backdrop" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-40 hidden opacity-0 transition-opacity duration-300"></div>
-
-  <aside
-    id="editor-drawer"
-    class="fixed top-0 right-0 h-full w-full max-w-md bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 ease-out flex flex-col"
-    aria-hidden="true"
-  >
-    <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-rose-50/50">
-      <div>
-        <h2 class="text-lg font-semibold text-slate-800">Personalizar Carta</h2>
-        <p class="text-xs text-slate-500">Escribe tu mensaje y elige el estilo del sobre</p>
-      </div>
-      <button
-        id="btn-close-editor"
-        type="button"
-        class="p-2 rounded-full hover:bg-slate-200/70 text-slate-500 hover:text-slate-800 transition-colors cursor-pointer"
-        aria-label="Cerrar panel"
-      >
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      </button>
-    </div>
-
-    <form id="letter-form" class="flex-1 overflow-y-auto p-6 space-y-5">
-      <!-- Selector de Tema -->
-      <div>
-        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2.5">
-          Estilo y Paleta del Sobre
-        </label>
-        <div class="grid grid-cols-2 gap-2.5" id="theme-selector">
-          <button type="button" data-theme-option="rose" class="theme-btn flex items-center gap-2.5 p-2.5 rounded-xl border-2 border-rose-500 bg-rose-50/60 text-left transition-all cursor-pointer">
-            <span class="w-6 h-6 rounded-full bg-gradient-to-br from-pink-400 to-rose-600 shrink-0 shadow-xs"></span>
-            <span class="text-xs font-medium text-slate-800">Rosa Romántico</span>
-          </button>
-
-          <button type="button" data-theme-option="vintage" class="theme-btn flex items-center gap-2.5 p-2.5 rounded-xl border border-slate-200 hover:border-amber-400 text-left transition-all cursor-pointer">
-            <span class="w-6 h-6 rounded-full bg-gradient-to-br from-amber-200 to-red-800 shrink-0 shadow-xs"></span>
-            <span class="text-xs font-medium text-slate-800">Crema Vintage</span>
-          </button>
-
-          <button type="button" data-theme-option="lavender" class="theme-btn flex items-center gap-2.5 p-2.5 rounded-xl border border-slate-200 hover:border-purple-400 text-left transition-all cursor-pointer">
-            <span class="w-6 h-6 rounded-full bg-gradient-to-br from-purple-300 to-indigo-700 shrink-0 shadow-xs"></span>
-            <span class="text-xs font-medium text-slate-800">Lavanda Mágico</span>
-          </button>
-
-          <button type="button" data-theme-option="midnight" class="theme-btn flex items-center gap-2.5 p-2.5 rounded-xl border border-slate-200 hover:border-amber-500 text-left transition-all cursor-pointer">
-            <span class="w-6 h-6 rounded-full bg-gradient-to-br from-slate-800 to-amber-500 shrink-0 shadow-xs"></span>
-            <span class="text-xs font-medium text-slate-800">Medianoche Dorado</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- Destinatario -->
-      <div>
-        <label for="input-recipient" class="block text-sm font-medium text-slate-700 mb-1">
-          Para (Destinatario):
-        </label>
-        <input
-          id="input-recipient"
-          type="text"
-          maxlength="50"
-          placeholder="Ej. Mi amor, Sofía, Carlos..."
-          class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:border-rose-400 focus:ring-2 focus:ring-rose-100 outline-none text-sm text-slate-800 transition-all"
-        />
-      </div>
-
-      <!-- Encabezado corto -->
-      <div>
-        <label for="input-title" class="block text-sm font-medium text-slate-700 mb-1">
-          Título o encabezado corto:
-        </label>
-        <input
-          id="input-title"
-          type="text"
-          maxlength="80"
-          placeholder="Ej. Feliz aniversario, Pensando en ti..."
-          class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:border-rose-400 focus:ring-2 focus:ring-rose-100 outline-none text-sm text-slate-800 transition-all"
-        />
-      </div>
-
-      <!-- Mensaje completo -->
-      <div>
-        <div class="flex items-center justify-between mb-1">
-          <label for="input-message" class="block text-sm font-medium text-slate-700">
-            Tu mensaje de amor:
-          </label>
-          <span id="char-count" class="text-xs text-slate-400">0 / 800</span>
-        </div>
-        <textarea
-          id="input-message"
-          rows="5"
-          maxlength="800"
-          placeholder="Escribe aquí todo lo que sientes..."
-          class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:border-rose-400 focus:ring-2 focus:ring-rose-100 outline-none text-sm text-slate-800 resize-none transition-all leading-relaxed"
-        ></textarea>
-      </div>
-
-      <!-- Remitente / Firma -->
-      <div>
-        <label for="input-sender" class="block text-sm font-medium text-slate-700 mb-1">
-          Firma / Remitente:
-        </label>
-        <input
-          id="input-sender"
-          type="text"
-          maxlength="60"
-          placeholder="Ej. Con cariño, Tu persona favorita"
-          class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:border-rose-400 focus:ring-2 focus:ring-rose-100 outline-none text-sm text-slate-800 transition-all"
-        />
-      </div>
-    </form>
-
-    <!-- Acciones del editor -->
-    <div class="p-4 border-t border-slate-100 bg-slate-50/80 flex flex-col sm:flex-row gap-2.5">
-      <button
-        id="btn-save-preview"
-        type="button"
-        class="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium bg-slate-800 hover:bg-slate-900 text-white transition-all active:scale-95 cursor-pointer"
-      >
-        Guardar y ver sobre
-      </button>
-      <button
-        id="btn-copy-link-modal"
-        type="button"
-        class="flex-1 inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-medium bg-rose-600 hover:bg-rose-700 text-white shadow-sm transition-all active:scale-95 cursor-pointer"
-      >
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-        </svg>
-        <span>Copiar enlace</span>
-      </button>
-    </div>
-  </aside>
-
-  <!-- Notificación Toast (Reemplaza cualquier uso de alert) -->
-  <div
-    id="toast-notification"
-    class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-5 py-3 rounded-full bg-slate-900/95 text-white text-sm font-medium shadow-xl flex items-center gap-2.5 opacity-0 pointer-events-none translate-y-4 transition-all duration-300"
-  >
-    <svg class="w-4 h-4 text-emerald-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-    </svg>
-    <span id="toast-message">¡Enlace copiado al portapapeles!</span>
   </div>
 
+  <!-- Navegación de Días (1 al 7) -->
+  <header class="day-nav">
+    <h1 class="day-badge-title" id="headerTitle">Carta del Día 1</h1>
+    <div class="days-pills" id="daysPills"></div>
+  </header>
+
+  <!-- Escena del Sobre 3D -->
+  <main class="stage">
+    <div class="envelope-wrapper" id="envelope">
+      <div class="envelope-back"></div>
+
+      <article class="letter" id="letterPaper">
+        <div class="letter-header">
+          <span class="letter-day-tag" id="letterDayTag">Día 1 de 7</span>
+          <button class="close-letter-btn" id="closeLetterBtn" title="Guardar carta">✕</button>
+        </div>
+        <h2 class="letter-greeting" id="letterGreeting">Mi bella dama,</h2>
+
+        <div class="polaroid-frame" id="polaroidBox">
+          <img id="letterPhoto" src="assets/photo1.png" alt="Nuestro recuerdo">
+          <div class="polaroid-caption" id="photoCaption">Día 1</div>
+        </div>
+
+        <p class="letter-body" id="letterBody"></p>
+        <div class="letter-signature" id="letterSignature">Con todo mi amor ❤️</div>
+      </article>
+
+      <div class="envelope-pocket"></div>
+      <div class="envelope-flap"></div>
+      <div class="wax-seal"><span>❤</span></div>
+    </div>
+
+    <p class="tap-hint" id="tapHint">Toca el sobre para abrir tu carta ✨</p>
+    <button class="reopen-welcome-btn" id="reopenWelcomeBtn">Leer nota de bienvenida</button>
+  </main>
+
   <script>
-    /**
-     * Estado inicial de la carta de amor
-     */
-    const defaultLetterData = {
-      recipient: "Mi persona favorita",
-      title: "Un pequeño recordatorio de cuánto te quiero",
-      message: "Desde que llegaste a mi vida, cada día tiene un brillo especial. Gracias por cada sonrisa, por tu compañía y por hacer que los momentos más simples se vuelvan inolvidables.\n\nSiempre voy a estar aquí para ti.",
-      sender: "Con cariño, Alguien que te adora",
-      theme: "rose"
-    };
+    const WELCOME_SEEN_KEY = "love_letters_welcome_seen_v1";
+    const appData = window.CARTAS_CONFIG;
 
-    let currentLetter = { ...defaultLetterData };
-    let isEnvelopeOpen = false;
-    let particleInterval = null;
-    let isSharedView = false;
+    let unlockedDay = 1;
+    let selectedDay = 1;
 
-    // Referencias al DOM
-    const envelopeStage = document.getElementById("envelope-stage");
-    const stageHint = document.getElementById("stage-hint");
-    const btnToggleEnvelope = document.getElementById("btn-toggle-envelope");
-    const btnCloseLetter = document.getElementById("btn-close-letter");
-    const btnOpenEditor = document.getElementById("btn-open-editor");
-    const btnCreateOwn = document.getElementById("btn-create-own");
-    const btnQuickShare = document.getElementById("btn-quick-share");
-    const editorBackdrop = document.getElementById("editor-backdrop");
-    const editorDrawer = document.getElementById("editor-drawer");
-    const btnCloseEditor = document.getElementById("btn-close-editor");
-    const btnSavePreview = document.getElementById("btn-save-preview");
-    const btnCopyLinkModal = document.getElementById("btn-copy-link-modal");
-    const particlesContainer = document.getElementById("particles-container");
-
-    // Campos de visualización
-    const displayRecipient = document.getElementById("display-recipient");
-    const envelopeLabelName = document.getElementById("envelope-label-name");
-    const displayTitle = document.getElementById("display-title");
-    const displayMessage = document.getElementById("display-message");
-    const displaySender = document.getElementById("display-sender");
-
-    // Inputs del formulario
-    const inputRecipient = document.getElementById("input-recipient");
-    const inputTitle = document.getElementById("input-title");
-    const inputMessage = document.getElementById("input-message");
-    const inputSender = document.getElementById("input-sender");
-    const charCount = document.getElementById("char-count");
-    const themeButtons = document.querySelectorAll(".theme-btn");
-
-    /**
-     * Codificación y decodificación Base64 segura para caracteres UTF-8 (acentos, ñ, emojis)
-     */
-    function encodeBase64UTF8(obj) {
-      try {
-        const jsonStr = JSON.stringify(obj);
-        const bytes = new TextEncoder().encode(jsonStr);
-        let binString = "";
-        bytes.forEach((b) => {
-          binString += String.fromCharCode(b);
-        });
-        return btoa(binString);
-      } catch (e) {
-        console.error("Error al codificar datos:", e);
-        return "";
-      }
+    function computeUnlockedDay(startDateStr) {
+      const parts = startDateStr.split("-").map(Number);
+      const start = new Date(parts[0], parts[1] - 1, parts[2]);
+      const now = new Date();
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      const diffDays = Math.floor((today - start) / (1000 * 60 * 60 * 24)) + 1;
+      if (diffDays < 1) return 1;
+      if (diffDays > 7) return 7;
+      return diffDays;
     }
 
-    function decodeBase64UTF8(base64Str) {
-      try {
-        const binString = atob(base64Str);
-        const bytes = new Uint8Array(binString.length);
-        for (let i = 0; i < binString.length; i++) {
-          bytes[i] = binString.charCodeAt(i);
-        }
-        const jsonStr = new TextDecoder().decode(bytes);
-        return JSON.parse(jsonStr);
-      } catch (e) {
-        console.error("Error al decodificar datos de URL:", e);
-        return null;
-      }
-    }
-
-    /**
-     * Muestra una notificación flotante elegante
-     */
-    let toastTimeout;
-    function showToast(text) {
-      const toast = document.getElementById("toast-notification");
-      const toastMsg = document.getElementById("toast-message");
-      toastMsg.textContent = text;
-
-      toast.classList.remove("opacity-0", "translate-y-4", "pointer-events-none");
-      toast.classList.add("opacity-100", "translate-y-0");
-
-      clearTimeout(toastTimeout);
-      toastTimeout = setTimeout(() => {
-        toast.classList.add("opacity-0", "translate-y-4", "pointer-events-none");
-        toast.classList.remove("opacity-100", "translate-y-0");
-      }, 3200);
-    }
-
-    /**
-     * Renderiza los datos actuales en el sobre y la carta
-     */
-    function renderLetter() {
-      const recipient = currentLetter.recipient.trim() || "Alguien especial";
-      const title = currentLetter.title.trim() || "Para ti";
-      const message = currentLetter.message.trim() || "Te quiero mucho.";
-      const sender = currentLetter.sender.trim() || "Con cariño";
-
-      displayRecipient.textContent = recipient;
-      envelopeLabelName.textContent = recipient;
-      displayTitle.textContent = title;
-      displayMessage.textContent = message;
-      displaySender.textContent = sender;
-
-      document.body.setAttribute("data-theme", currentLetter.theme || "rose");
-      updateThemeButtonsUI(currentLetter.theme || "rose");
-    }
-
-    /**
-     * Sincroniza los inputs del editor con el estado actual
-     */
-    function populateForm() {
-      inputRecipient.value = currentLetter.recipient;
-      inputTitle.value = currentLetter.title;
-      inputMessage.value = currentLetter.message;
-      inputSender.value = currentLetter.sender;
-      charCount.textContent = `${inputMessage.value.length} / 800`;
-      updateThemeButtonsUI(currentLetter.theme);
-    }
-
-    function updateThemeButtonsUI(selectedTheme) {
-      themeButtons.forEach((btn) => {
-        const option = btn.getAttribute("data-theme-option");
-        if (option === selectedTheme) {
-          btn.classList.remove("border", "border-slate-200");
-          btn.classList.add("border-2", "border-rose-500", "bg-rose-50/60");
-        } else {
-          btn.classList.remove("border-2", "border-rose-500", "bg-rose-50/60");
-          btn.classList.add("border", "border-slate-200");
-        }
-      });
-    }
-
-    /**
-     * Generador de corazones y destellos flotantes en el fondo
-     */
-    function spawnParticle() {
-      const particle = document.createElement("div");
-      particle.className = "floating-particle";
-
-      const isHeart = Math.random() > 0.35;
-      const size = Math.floor(Math.random() * 18) + 12; // 12px a 30px
-      const leftPos = Math.random() * 100;
-      const duration = Math.random() * 4 + 4.5; // 4.5s a 8.5s
-
-      particle.style.left = `${leftPos}vw`;
-      particle.style.bottom = `-30px`;
-      particle.style.width = `${size}px`;
-      particle.style.height = `${size}px`;
-      particle.style.animationDuration = `${duration}s`;
-
-      if (isHeart) {
-        particle.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full drop-shadow-xs"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`;
+    function applyTheme(theme) {
+      if (theme && theme !== "rose") {
+        document.documentElement.setAttribute("data-theme", theme);
       } else {
-        particle.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z"/></svg>`;
-      }
-
-      particlesContainer.appendChild(particle);
-
-      setTimeout(() => {
-        particle.remove();
-      }, duration * 1000);
-    }
-
-    function startParticles(burst = true) {
-      if (burst) {
-        for (let i = 0; i < 12; i++) {
-          setTimeout(spawnParticle, i * 110);
-        }
-      }
-      if (!particleInterval) {
-        particleInterval = setInterval(spawnParticle, 550);
+        document.documentElement.removeAttribute("data-theme");
       }
     }
 
-    function stopParticles() {
-      if (particleInterval) {
-        clearInterval(particleInterval);
-        particleInterval = null;
+    function renderDayPills() {
+      const container = document.getElementById("daysPills");
+      container.innerHTML = "";
+      for (let d = 1; d <= 7; d++) {
+        const btn = document.createElement("button");
+        const isLocked = d > unlockedDay;
+        btn.className = `day-pill ${d === selectedDay ? "active" : ""} ${isLocked ? "locked" : ""}`;
+        btn.textContent = isLocked ? `🔒 Día ${d}` : `Día ${d}`;
+        btn.onclick = () => {
+          if (isLocked) {
+            alert(`¡Paciencia mi amor! La carta del Día ${d} se desbloqueará pronto 💌`);
+            return;
+          }
+          selectedDay = d;
+          closeEnvelope();
+          setTimeout(() => {
+            renderLetter(selectedDay);
+            renderDayPills();
+          }, 250);
+        };
+        container.appendChild(btn);
       }
     }
 
-    /**
-     * Abrir / Cerrar el sobre con animación 3D
-     */
-    function setEnvelopeState(open) {
-      isEnvelopeOpen = open;
-      if (isEnvelopeOpen) {
-        envelopeStage.classList.add("is-open");
-        stageHint.textContent = "Toca el sobre o la X para guardar la carta 💌";
-        btnToggleEnvelope.textContent = "Cerrar carta";
-        startParticles(true);
+    function renderLetter(dayNum) {
+      const item = appData.days.find(x => x.day === dayNum) || appData.days[0];
+      document.getElementById("headerTitle").textContent = `Carta del Día ${dayNum}`;
+      document.getElementById("letterDayTag").textContent = `Día ${dayNum} de 7`;
+      document.getElementById("letterGreeting").textContent = item.greeting;
+      document.getElementById("letterBody").textContent = item.body;
+      document.getElementById("letterSignature").textContent = item.signature;
+
+      const polaroidBox = document.getElementById("polaroidBox");
+      const img = document.getElementById("letterPhoto");
+      const caption = document.getElementById("photoCaption");
+
+      if (item.photo && item.photo.trim() !== "") {
+        polaroidBox.style.display = "block";
+        img.src = item.photo;
+        caption.textContent = item.caption || `Día ${dayNum}`;
+        img.onerror = () => {
+          polaroidBox.style.display = "none";
+        };
       } else {
-        envelopeStage.classList.remove("is-open");
-        stageHint.textContent = "Toca el sello de corazón para abrir tu carta ✨";
-        btnToggleEnvelope.textContent = "Abrir carta";
-        stopParticles();
+        polaroidBox.style.display = "none";
       }
     }
 
-    envelopeStage.addEventListener("click", () => {
-      setEnvelopeState(!isEnvelopeOpen);
-    });
+    const envelope = document.getElementById("envelope");
+    const tapHint = document.getElementById("tapHint");
 
-    envelopeStage.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        setEnvelopeState(!isEnvelopeOpen);
-      }
-    });
-
-    btnToggleEnvelope.addEventListener("click", () => {
-      setEnvelopeState(!isEnvelopeOpen);
-    });
-
-    btnCloseLetter.addEventListener("click", (e) => {
-      e.stopPropagation();
-      setEnvelopeState(false);
-    });
-
-    /**
-     * Control del Drawer / Panel de edición
-     */
-    function openEditor() {
-      populateForm();
-      editorBackdrop.classList.remove("hidden");
-      requestAnimationFrame(() => {
-        editorBackdrop.classList.remove("opacity-0");
-        editorDrawer.classList.remove("translate-x-full");
-      });
-      editorDrawer.setAttribute("aria-hidden", "false");
-    }
-
-    function closeEditor() {
-      editorBackdrop.classList.add("opacity-0");
-      editorDrawer.classList.add("translate-x-full");
-      editorDrawer.setAttribute("aria-hidden", "true");
-      setTimeout(() => {
-        editorBackdrop.classList.add("hidden");
-      }, 300);
-    }
-
-    btnOpenEditor.addEventListener("click", openEditor);
-    btnCloseEditor.addEventListener("click", closeEditor);
-    editorBackdrop.addEventListener("click", closeEditor);
-
-    // Actualización en vivo mientras el usuario escribe
-    function syncFromInputs() {
-      currentLetter.recipient = inputRecipient.value;
-      currentLetter.title = inputTitle.value;
-      currentLetter.message = inputMessage.value;
-      currentLetter.sender = inputSender.value;
-      charCount.textContent = `${inputMessage.value.length} / 800`;
-      renderLetter();
-    }
-
-    [inputRecipient, inputTitle, inputMessage, inputSender].forEach((el) => {
-      el.addEventListener("input", syncFromInputs);
-    });
-
-    themeButtons.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        currentLetter.theme = btn.getAttribute("data-theme-option");
-        renderLetter();
-      });
-    });
-
-    btnSavePreview.addEventListener("click", () => {
-      syncFromInputs();
-      closeEditor();
-      if (isEnvelopeOpen) {
-        setEnvelopeState(false);
-        setTimeout(() => setEnvelopeState(true), 650);
-      }
-      showToast("¡Carta actualizada! Toca el sobre para abrirla.");
-    });
-
-    /**
-     * Generación y copia del enlace compartible
-     */
-    function generateShareableURL() {
-      const payload = {
-        r: currentLetter.recipient,
-        t: currentLetter.title,
-        m: currentLetter.message,
-        s: currentLetter.sender,
-        th: currentLetter.theme
-      };
-      const encoded = encodeBase64UTF8(payload);
-      const url = new URL(window.location.href);
-      url.search = "";
-      url.searchParams.set("carta", encoded);
-      return url.toString();
-    }
-
-    function copyShareLink() {
-      const shareUrl = generateShareableURL();
-      const tempInput = document.createElement("input");
-      tempInput.value = shareUrl;
-      document.body.appendChild(tempInput);
-      tempInput.select();
-      tempInput.setSelectionRange(0, 99999);
-
-      try {
-        document.execCommand("copy");
-        showToast("¡Enlace de tu carta copiado! Listo para enviar 💌");
-      } catch (err) {
-        showToast("No se pudo copiar automáticamente.");
-      }
-
-      document.body.removeChild(tempInput);
-    }
-
-    btnQuickShare.addEventListener("click", copyShareLink);
-    btnCopyLinkModal.addEventListener("click", copyShareLink);
-
-    /**
-     * Botón para salir del modo destinatario y crear una carta nueva
-     */
-    btnCreateOwn.addEventListener("click", () => {
-      isSharedView = false;
-      const cleanUrl = new URL(window.location.href);
-      cleanUrl.search = "";
-      window.history.replaceState({}, document.title, cleanUrl.toString());
-
-      btnCreateOwn.classList.add("hidden");
-      btnOpenEditor.classList.remove("hidden");
-      btnQuickShare.classList.remove("hidden");
-      openEditor();
-    });
-
-    /**
-     * Inicialización al cargar la página: verifica si viene una carta en la URL
-     */
-    function initApp() {
-      const params = new URLSearchParams(window.location.search);
-      const encodedCarta = params.get("carta");
-
-      if (encodedCarta) {
-        const decoded = decodeBase64UTF8(encodedCarta);
-        if (decoded && typeof decoded === "object") {
-          currentLetter = {
-            recipient: decoded.r || defaultLetterData.recipient,
-            title: decoded.t || defaultLetterData.title,
-            message: decoded.m || defaultLetterData.message,
-            sender: decoded.s || defaultLetterData.sender,
-            theme: decoded.th || "rose"
-          };
-
-          isSharedView = true;
-          // Ocultar botón de edición para conservar la sorpresa del destinatario
-          btnOpenEditor.classList.add("hidden");
-          btnQuickShare.classList.add("hidden");
-          btnCreateOwn.classList.remove("hidden");
-        }
-      }
-
-      renderLetter();
-      // Algunas partículas suaves iniciales
-      for (let i = 0; i < 5; i++) {
-        setTimeout(spawnParticle, i * 400);
+    function openEnvelope() {
+      if (!envelope.classList.contains("open")) {
+        envelope.classList.add("open");
+        tapHint.style.opacity = "0";
+        spawnHeartsBurst();
       }
     }
 
-    window.addEventListener("DOMContentLoaded", initApp);
+    function closeEnvelope() {
+      envelope.classList.remove("open");
+      tapHint.style.opacity = "0.8";
+    }
+
+    envelope.addEventListener("click", (e) => {
+      if (e.target.id === "closeLetterBtn") {
+        e.stopPropagation();
+        closeEnvelope();
+        return;
+      }
+      openEnvelope();
+    });
+
+    function spawnHeartsBurst() {
+      const container = document.getElementById("particles-container");
+      const emojis = ["❤️", "💖", "✨", "💕", "🌸"];
+      for (let i = 0; i < 18; i++) {
+        setTimeout(() => {
+          const heart = document.createElement("div");
+          heart.className = "floating-heart";
+          heart.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+          heart.style.left = Math.random() * 100 + "vw";
+          heart.style.fontSize = (16 + Math.random() * 18) + "px";
+          heart.style.animationDuration = (3.5 + Math.random() * 3) + "s";
+          container.appendChild(heart);
+          setTimeout(() => heart.remove(), 6500);
+        }, i * 110);
+      }
+    }
+
+    const welcomeOverlay = document.getElementById("welcomeOverlay");
+    function showWelcomeModal() {
+      document.getElementById("welcomeTitle").textContent = appData.welcomeTitle || "Para ti, mi bella dama";
+      document.getElementById("welcomeText").textContent = appData.welcomeMessage;
+      welcomeOverlay.classList.add("visible");
+    }
+
+    document.getElementById("startExperienceBtn").addEventListener("click", () => {
+      welcomeOverlay.classList.remove("visible");
+      localStorage.setItem(WELCOME_SEEN_KEY, "true");
+      spawnHeartsBurst();
+    });
+
+    document.getElementById("reopenWelcomeBtn").addEventListener("click", showWelcomeModal);
+
+    // Inicialización
+    applyTheme(appData.theme);
+    unlockedDay = computeUnlockedDay(appData.startDate);
+
+    // Permite probar cualquier día agregando ?dia=3 a la URL
+    const urlDay = Number(new URLSearchParams(window.location.search).get("dia"));
+    if (urlDay >= 1 && urlDay <= 7) {
+      unlockedDay = Math.max(unlockedDay, urlDay);
+      selectedDay = urlDay;
+    } else {
+      selectedDay = unlockedDay;
+    }
+
+    renderDayPills();
+    renderLetter(selectedDay);
+
+    if (!localStorage.getItem(WELCOME_SEEN_KEY)) {
+      setTimeout(showWelcomeModal, 450);
+    }
   </script>
 </body>
 </html>
