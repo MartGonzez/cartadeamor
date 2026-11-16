@@ -401,6 +401,18 @@ body.letter-open .day-nav {
   transition: opacity 0.3s ease;
 }
 
+/* Agrega estas dos reglas justo debajo de .tap-hint */
+body.letter-open .tap-hint {
+  animation: none;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.envelope-wrapper.open {
+  z-index: 50;
+}
+
 [data-theme="midnight"] .tap-hint {
   color: #f8fafc;
 }
