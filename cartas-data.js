@@ -2,7 +2,7 @@ window.CARTAS_CONFIG = {
   "startDate": "2026-11-16",
   "theme": "rose",
   "welcomeTitle": "Te amo",
-  "welcomeMessage": "Para ti Amorcito❤ Durante los próximos 7 días habrá una carta distinta que te he escrito para recordarte y que sepas lo mucho que te amo y sepas lo especial que eres.",
+  "welcomeMessage": "Para ti Amorcito❤ Durante los próximos 7 días habrá una carta distinta que te he escrito para recordarte y sepas lo mucho que te amo y lo especial que eres.",
   "days": [
     {
       "day": 1,
