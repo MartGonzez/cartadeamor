@@ -1,6 +1,6 @@
 window.CARTAS_CONFIG = {
-  startDate: "2026-11-16", // Fecha en que empieza el Día 1 (YYYY-MM-DD)
-  theme: "rose",           // Opciones: "rose", "vintage", "lavender", "midnight"
+  startDate: "2026-11-16",
+  theme: "rose",
   welcomeTitle: "Para ti, mi bella dama",
   welcomeMessage: "Para ti mi bella dama, durante los próximos 7 días habrán 7 cartas distintas dedicadas para ti con mi amor.",
   days: [
