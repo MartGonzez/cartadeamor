@@ -2,7 +2,7 @@ window.CARTAS_CONFIG = {
   "startDate": "2026-11-16",
   "theme": "rose",
   "welcomeTitle": "Te amo",
-  "welcomeMessage": "Para ti Amorcito❤ Durante los próximos 7 días habrá una carta distinta que te he escrito para recordarte y sepas lo mucho que te amo y lo especial que eres.",
+  "welcomeMessage": "Para ti Amorcito❤ Durante los próximos 7 días habrá una carta distinta que te he escrito para recordarte y que sepas lo mucho que te amo y sepas lo especial que eres.",
   "days": [
     {
       "day": 1,
@@ -22,8 +22,8 @@ window.CARTAS_CONFIG = {
     },
     {
       "day": 3,
-      "greeting": "Día 3: Mismo lugar, distintas miradas",
-      "body": "Mirando esta foto recuerdo lo feliz que me hace compartir mi tiempo contigo. Eres mi lugar favorito en el mundo.",
+      "greeting": "Día 3: Caras de tontos",
+      "body": "Una de las primeras fotos q nos tomamos juntos, allí pude ver tu cara de enamorada, y tu veías la de un tonto enamorado también ajaajja, ese día la pasamos super bien juntos, hiciste que el tiempo se detuviera y creyera que estábamos solos tu y yo en el local, fue increíble y no te lo conté, pero eso nunca me había pasado, de hecho me sigue pasando al estar contigo en el contexto que sea.\n\nEres la mejor.",
       "signature": "Te adoro ❤️",
       "photo": "assets/photo3.png",
       "caption": "Nuestro Día 3"
