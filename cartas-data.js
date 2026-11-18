@@ -1,6 +1,6 @@
 window.CARTAS_CONFIG = {
   "startDate": "2026-11-16",
-  "theme": "lavender",
+  "theme": "vintage",
   "welcomeTitle": "Te amo",
   "welcomeMessage": "Para ti Amorcito❤ Durante los próximos 7 días habrá una carta distinta que te he escrito para recordarte y que sepas lo mucho que te amo y sepas lo especial que eres.",
   "days": [
@@ -23,18 +23,18 @@ window.CARTAS_CONFIG = {
     {
       "day": 3,
       "greeting": "Día 3: Caras de tontos",
-      "body": "Una de las primeras fotos q nos tomamos juntos, allí pude ver tu cara de enamorada, y tu veías la de un tonto enamorado también ajaajja, ese día la pasamos super bien juntos, hiciste que el tiempo se detuviera y creyera que estábamos solos tu y yo en el local, fue increíble y no te lo conté, pero eso nunca me había pasado, de hecho me sigue pasando al estar contigo en el contexto que sea.\n\nEres la mejor.",
+      "body": "Una de las primeras fotos que nos tomamos juntos, allí pude ver tu cara de enamorada, y tu veías la de un tonto enamorado también ajaajja, ese día la pasamos super bien juntos, hiciste que el tiempo se detuviera y creyera que estábamos solos tu y yo en el local, fue increíble y no te lo conté, pero eso nunca me había pasado, de hecho me sigue pasando al estar contigo en el contexto que sea.\n\nEres la mejor.",
       "signature": "Te adoro ❤️",
       "photo": "assets/photo3.png",
       "caption": "Nuestro Día 3"
     },
     {
       "day": 4,
-      "greeting": "Día 4: Mitad de semana contigo,",
-      "body": "Ya vamos en la cuarta carta y sigo quedándome corto de palabras para explicar lo agradecido que estoy de tenerte a mi lado.",
+      "greeting": "Día 4: AirBnb",
+      "body": "Ya vamos a la mitad y aun me queda tanto por decir, y debo decir que el día que fuimos al airbnb fue uno de los mas inesperados de mi vida, además de poder estar contigo solo en un departamento, compartimos copas, risas, historias y un momento de risas que nunca olvidare, ese día que fingimos estar comprometidos fue demasiado genial JAJAJAJA no tengo como expresar tanta alegría y adrenalina por continuar en esa situación, pero lo hicimos fantástico y además comimos gratis, repito, la paso muy bien contigo.\n\nTe Extraño.",
       "signature": "Con cariño infinito ❤️",
       "photo": "assets/photo4.png",
-      "caption": "Nuestro Día 4"
+      "caption": "Risas y risas"
     },
     {
       "day": 5,
