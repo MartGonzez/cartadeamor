@@ -38,11 +38,11 @@ window.CARTAS_CONFIG = {
     },
     {
       "day": 5,
-      "greeting": "Día 5: Lo que admiro de ti,",
-      "body": "Admiro tu fuerza, tu ternura y la forma tan bonita en que ves la vida. Me inspiras a ser mejor cada día.",
+      "greeting": "Día 5: Día en la playa",
+      "body": "Este día en la playa fue increíble, nunca olvidaré cuando nos cayó caca de pájaro jsjssjs justo cuando recién nos íbamos a sentar, te vi con tu traje de baño por primera vez en persona y creo que te queda muy bien, la pasamos tan bien.\n\nYa queda poco, Te amo Sofi",
       "signature": "Tuyo siempre ❤️",
       "photo": "assets/photo5.png",
-      "caption": "Nuestro Día 5"
+      "caption": "Carta 5"
     },
     {
       "day": 6,
