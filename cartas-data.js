@@ -46,11 +46,11 @@ window.CARTAS_CONFIG = {
     },
     {
       "day": 6,
-      "greeting": "Día 6: Casi llegamos al final,",
-      "body": "Falta solo un día para completar estas siete cartas, pero mi historia contigo apenas está empezando. Gracias por caminar conmigo.",
+      "greeting": "Día 6: Playa Parte 2",
+      "body": "Este día en la playa fue maravilloso, en realidad todos, comimos sushi Burger, fumamos, tomamos, dormimos juntos y vimos series, nos reímos y caminamos a mas no poder, no podía apartar la mirada de ti, es que eres muy linda amor, me motivaste a manejar a viña, y sobre todo a ser un mejor yo, tu eres increíblemente chistosa y hermosa, y sobre todo inteligente y perseverante, falta que salgamos a una escapada otra vez,  eres lo mejor que me ha pasado en el año.\n\nTe amo <3",
       "signature": "Te amo muchísimo ❤️",
       "photo": "assets/photo6.png",
-      "caption": "Nuestro Día 6"
+      "caption": "Foto Playa "
     },
     {
       "day": 7,
