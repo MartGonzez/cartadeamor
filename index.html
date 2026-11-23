@@ -6,7 +6,7 @@
   <title>7 Días de Cartas Para Ti 💌</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Lora:ital,wght@0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Lora:ital,wght@0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <script src="cartas-data.js"></script>
 </head>
@@ -24,14 +24,14 @@
     </div>
   </div>
 
-  <!-- Navegación de Días (1 al 7) -->
+  <!-- Navegación de Días (1 al 8) -->
   <header class="day-nav">
     <h1 class="day-badge-title" id="headerTitle">Carta del Día 1</h1>
     <div class="days-pills" id="daysPills"></div>
   </header>
 
-  <!-- Escena del Sobre 3D -->
-  <main class="stage">
+  <!-- Escena del Sobre 3D (Días 1 al 7) -->
+  <main class="stage" id="envelopeStage">
     <div class="envelope-wrapper" id="envelope">
       <div class="envelope-back"></div>
 
@@ -60,6 +60,47 @@
     <button class="reopen-welcome-btn" id="reopenWelcomeBtn">Leer nota de bienvenida</button>
   </main>
 
+  <!-- Escena Especial Día 8: Código Secreto y Collage -->
+  <section class="day8-stage hidden" id="day8Stage">
+    <!-- Pantalla 1: Ingreso de Código Secreto -->
+    <div class="secret-code-card" id="day8LockCard">
+      <div class="secret-icon">🔐</div>
+      <h2 class="secret-title">Código Secreto</h2>
+      <p class="secret-hint" id="day8HintText">Ingresa la fecha especial para desbloquear esta sorpresa...</p>
+
+      <div class="secret-input-wrapper">
+        <input
+          type="text"
+          id="secretCodeInput"
+          class="secret-code-input"
+          placeholder="__/__/____"
+          autocomplete="off"
+          spellcheck="false"
+        >
+        <p class="secret-error hidden" id="secretErrorMsg">Ese no es el código secreto... ¡intenta de nuevo! 💔</p>
+      </div>
+
+      <button class="welcome-btn" id="unlockDay8Btn">Desbloquear Sorpresa ✨</button>
+    </div>
+
+    <!-- Pantalla 2: Collage de 10 Fotos -->
+    <div class="collage-wrapper hidden" id="day8CollageWrapper">
+      <div class="collage-header">
+        <span class="letter-day-tag">Día 8 • Sorpresa Desbloqueada</span>
+        <h2 class="collage-title" id="day8CollageTitle">Nuestros Mejores Recuerdos ❤️</h2>
+        <p class="collage-subtitle" id="day8CollageSubtitle"></p>
+      </div>
+
+      <div class="collage-grid" id="collageGrid"></div>
+    </div>
+  </section>
+
+  <!-- Visor en grande al tocar una foto del collage -->
+  <div class="lightbox-overlay hidden" id="photoLightbox">
+    <button class="lightbox-close" id="closeLightboxBtn">✕</button>
+    <img id="lightboxImg" src="" alt="Recuerdo ampliado">
+  </div>
+
   <script>
     const WELCOME_SEEN_KEY = "love_letters_welcome_seen_v1";
     const appData = window.CARTAS_CONFIG;
@@ -74,7 +115,7 @@
       const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
       const diffDays = Math.floor((today - start) / (1000 * 60 * 60 * 24)) + 1;
       if (diffDays < 1) return 1;
-      if (diffDays > 7) return 7;
+      if (diffDays > 8) return 8;
       return diffDays;
     }
 
@@ -89,28 +130,36 @@
     function renderDayPills() {
       const container = document.getElementById("daysPills");
       container.innerHTML = "";
-      for (let d = 1; d <= 7; d++) {
+      for (let d = 1; d <= 8; d++) {
         const btn = document.createElement("button");
         const isLocked = d > unlockedDay;
+        const labelBase = d === 8 ? "✨ Día 8" : `Día ${d}`;
         btn.className = `day-pill ${d === selectedDay ? "active" : ""} ${isLocked ? "locked" : ""}`;
-        btn.textContent = isLocked ? `🔒 Día ${d}` : `Día ${d}`;
+        btn.textContent = isLocked ? `🔒 Día ${d}` : labelBase;
         btn.onclick = () => {
           if (isLocked) {
-            alert(`¡Paciencia mi amor! La carta del Día ${d} se desbloqueará pronto 💌`);
+            alert(`¡Paciencia mi amor! La sorpresa del Día ${d} se desbloqueará pronto 💌`);
             return;
           }
           selectedDay = d;
           closeEnvelope();
           setTimeout(() => {
-            renderLetter(selectedDay);
+            if (selectedDay === 8) {
+              showDay8View();
+            } else {
+              showLetterView(selectedDay);
+            }
             renderDayPills();
-          }, 250);
+          }, 220);
         };
         container.appendChild(btn);
       }
     }
 
-    function renderLetter(dayNum) {
+    function showLetterView(dayNum) {
+      document.getElementById("day8Stage").classList.add("hidden");
+      document.getElementById("envelopeStage").classList.remove("hidden");
+
       const item = appData.days.find(x => x.day === dayNum) || appData.days[0];
       document.getElementById("headerTitle").textContent = `Carta del Día ${dayNum}`;
       document.getElementById("letterDayTag").textContent = `Día ${dayNum} de 7`;
@@ -133,6 +182,100 @@
         polaroidBox.style.display = "none";
       }
     }
+
+    function showDay8View() {
+      document.getElementById("envelopeStage").classList.add("hidden");
+      document.getElementById("day8Stage").classList.remove("hidden");
+      document.getElementById("headerTitle").textContent = "Sorpresa del Día 8";
+
+      const cfg8 = appData.day8 || {
+        secretCode: "23/11/2026",
+        hint: "Ingresa nuestra fecha especial para desbloquear este recuerdo...",
+        collageTitle: "Nuestros Momentos Favoritos ❤️",
+        collageSubtitle: "Cada foto es un pedacito de nuestra historia juntos."
+      };
+
+      document.getElementById("day8HintText").textContent = cfg8.hint;
+      document.getElementById("day8CollageTitle").textContent = cfg8.collageTitle;
+      document.getElementById("day8CollageSubtitle").textContent = cfg8.collageSubtitle || "";
+
+      // Resetear pantalla del candado
+      document.getElementById("day8LockCard").classList.remove("hidden");
+      document.getElementById("day8CollageWrapper").classList.add("hidden");
+      document.getElementById("secretErrorMsg").classList.add("hidden");
+      document.getElementById("secretCodeInput").value = "";
+    }
+
+    function verifySecretCode() {
+      const cfg8 = appData.day8 || { secretCode: "23/11/2026" };
+      const input = document.getElementById("secretCodeInput");
+      const errorMsg = document.getElementById("secretErrorMsg");
+
+      const entered = input.value.trim().toLowerCase();
+      const expected = (cfg8.secretCode || "").trim().toLowerCase();
+
+      if (entered !== "" && entered === expected) {
+        errorMsg.classList.add("hidden");
+        document.getElementById("day8LockCard").classList.add("hidden");
+        renderCollagePhotos();
+        document.getElementById("day8CollageWrapper").classList.remove("hidden");
+        spawnHeartsBurst();
+      } else {
+        errorMsg.classList.remove("hidden");
+        input.classList.remove("shake-input");
+        void input.offsetWidth;
+        input.classList.add("shake-input");
+      }
+    }
+
+    function renderCollagePhotos() {
+      const grid = document.getElementById("collageGrid");
+      grid.innerHTML = "";
+
+      for (let i = 1; i <= 10; i++) {
+        const card = document.createElement("div");
+        card.className = "collage-card";
+
+        const img = document.createElement("img");
+        const basePath = `assets/colage${i}`;
+        img.src = `${basePath}.png`;
+        img.alt = `Recuerdo ${i}`;
+        img.loading = "lazy";
+
+        // Si no está en .png, intenta automáticamente con .jpg y luego .webp
+        img.onerror = function () {
+          if (!this.dataset.step) {
+            this.dataset.step = "jpg";
+            this.src = `${basePath}.jpg`;
+          } else if (this.dataset.step === "jpg") {
+            this.dataset.step = "webp";
+            this.src = `${basePath}.webp`;
+          }
+        };
+
+        card.onclick = () => {
+          document.getElementById("lightboxImg").src = img.src;
+          document.getElementById("photoLightbox").classList.remove("hidden");
+        };
+
+        card.appendChild(img);
+        grid.appendChild(card);
+      }
+    }
+
+    document.getElementById("unlockDay8Btn").addEventListener("click", verifySecretCode);
+    document.getElementById("secretCodeInput").addEventListener("keydown", (e) => {
+      if (e.key === "Enter") verifySecretCode();
+    });
+
+    document.getElementById("closeLightboxBtn").addEventListener("click", () => {
+      document.getElementById("photoLightbox").classList.add("hidden");
+    });
+    document.getElementById("photoLightbox").addEventListener("click", (e) => {
+      if (e.target.id === "photoLightbox") {
+        document.getElementById("photoLightbox").classList.add("hidden");
+      }
+    });
 
     const envelope = document.getElementById("envelope");
     const tapHint = document.getElementById("tapHint");
@@ -197,9 +340,9 @@
     applyTheme(appData.theme);
     unlockedDay = computeUnlockedDay(appData.startDate);
 
-    // Permite probar cualquier día agregando ?dia=3 a la URL
+    // Permite probar cualquier día agregando ?dia=8 a la URL
     const urlDay = Number(new URLSearchParams(window.location.search).get("dia"));
-    if (urlDay >= 1 && urlDay <= 7) {
+    if (urlDay >= 1 && urlDay <= 8) {
       unlockedDay = Math.max(unlockedDay, urlDay);
       selectedDay = urlDay;
     } else {
@@ -207,7 +350,11 @@
     }
 
     renderDayPills();
-    renderLetter(selectedDay);
+    if (selectedDay === 8) {
+      showDay8View();
+    } else {
+      showLetterView(selectedDay);
+    }
 
     if (!localStorage.getItem(WELCOME_SEEN_KEY)) {
       setTimeout(showWelcomeModal, 450);
