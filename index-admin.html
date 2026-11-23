@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin - Editor de las 7 Cartas 💌</title>
+  <title>Admin - Editor de las Cartas 💌</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <script src="cartas-data.js"></script>
@@ -12,9 +12,10 @@
 
   <div class="admin-container">
     <header class="admin-header">
-      <h1>💌 Editor de las 7 Cartas</h1>
+      <h1>💌 Editor de las Cartas</h1>
       <div class="actions-bar">
         <a href="index.html" target="_blank" class="btn btn-secondary">👁️ Previsualizar</a>
+        <a href="index.html?dia=8" target="_blank" class="btn btn-secondary">🔐 Probar Día 8</a>
         <button class="btn btn-secondary" id="resetFromFileBtn" title="Descarta borrador local y recarga cartas-data.js">🔄 Recargar archivo</button>
         <button class="btn btn-primary" id="downloadFileBtn">⬇️ Descargar cartas-data.js</button>
       </div>
@@ -56,7 +57,7 @@
 
     <!-- Editor por Día (1 al 7) -->
     <section class="admin-card">
-      <h2>2. Editar Carta y Foto por Día</h2>
+      <h2>2. Editar Carta y Foto por Día (Días 1 al 7)</h2>
       <div class="day-tabs" id="dayTabs"></div>
 
       <div class="grid-2">
@@ -93,6 +94,37 @@
         </div>
       </div>
     </section>
+
+    <!-- Editor Día 8: Código Secreto y Collage -->
+    <section class="admin-card">
+      <h2>3. Día 8: Código Secreto y Collage de 10 Fotos</h2>
+      <div class="grid-2">
+        <div>
+          <label for="day8SecretCode">Código Secreto (números, barras o letras)</label>
+          <input type="text" id="day8SecretCode" placeholder="Ej: 23/11/2026">
+        </div>
+        <div>
+          <label for="day8CollageTitle">Título al desbloquear el Collage</label>
+          <input type="text" id="day8CollageTitle" placeholder="Nuestros Momentos Favoritos ❤️">
+        </div>
+      </div>
+
+      <div style="margin-bottom: 1rem;">
+        <label for="day8Hint">Pista que verá ella antes de poner el código</label>
+        <input type="text" id="day8Hint" placeholder="Ingresa nuestra fecha especial para desbloquear este recuerdo...">
+      </div>
+
+      <div>
+        <label for="day8CollageSubtitle">Mensaje corto debajo del título del collage</label>
+        <input type="text" id="day8CollageSubtitle" placeholder="Cada foto es un pedacito de nuestra historia juntos.">
+      </div>
+
+      <div class="photo-preview-row">
+        <div style="font-size: 0.85rem; color: #6b3b4c;">
+          <strong>Fotos del Collage:</strong> Guarda tus 10 imágenes dentro de <code>assets/</code> con los nombres <code>colage1.png</code> hasta <code>colage10.png</code> (también reconoce <code>.jpg</code> y <code>.webp</code> automáticamente).
+        </div>
+      </div>
+    </section>
   </div>
 
   <div class="status-toast" id="toast">¡Archivo cartas-data.js descargado! ✨</div>
@@ -101,6 +133,15 @@
     const DRAFT_KEY = "love_letters_admin_draft_v1";
 
     let data = JSON.parse(localStorage.getItem(DRAFT_KEY)) || structuredClone(window.CARTAS_CONFIG);
+    if (!data.day8) {
+      data.day8 = {
+        secretCode: "23/11/2026",
+        hint: "Ingresa nuestra fecha especial para desbloquear este recuerdo...",
+        collageTitle: "Nuestros Momentos Favoritos ❤️",
+        collageSubtitle: "Cada foto es un pedacito de nuestra historia juntos."
+      };
+    }
+
     let currentEditDay = 1;
 
     function showToast(msg) {
@@ -124,6 +165,14 @@
         dayObj.photo = document.getElementById("dayPhoto").value;
         dayObj.caption = document.getElementById("dayCaption").value;
       }
+
+      data.day8 = {
+        secretCode: document.getElementById("day8SecretCode").value,
+        hint: document.getElementById("day8Hint").value,
+        collageTitle: document.getElementById("day8CollageTitle").value,
+        collageSubtitle: document.getElementById("day8CollageSubtitle").value
+      };
+
       localStorage.setItem(DRAFT_KEY, JSON.stringify(data));
     }
 
@@ -144,6 +193,12 @@
       document.getElementById("themeSelect").value = data.theme;
       document.getElementById("welcomeTitle").value = data.welcomeTitle;
       document.getElementById("welcomeMessage").value = data.welcomeMessage;
+
+      document.getElementById("day8SecretCode").value = data.day8.secretCode || "";
+      document.getElementById("day8Hint").value = data.day8.hint || "";
+      document.getElementById("day8CollageTitle").value = data.day8.collageTitle || "";
+      document.getElementById("day8CollageSubtitle").value = data.day8.collageSubtitle || "";
+
       loadDayIntoForm(currentEditDay);
     }
 
@@ -192,6 +247,14 @@
       if (confirm("¿Quieres cargar los datos actuales de cartas-data.js y descartar cambios sin descargar?")) {
         localStorage.removeItem(DRAFT_KEY);
         data = structuredClone(window.CARTAS_CONFIG);
+        if (!data.day8) {
+          data.day8 = {
+            secretCode: "23/11/2026",
+            hint: "Ingresa nuestra fecha especial para desbloquear este recuerdo...",
+            collageTitle: "Nuestros Momentos Favoritos ❤️",
+            collageSubtitle: "Cada foto es un pedacito de nuestra historia juntos."
+          };
+        }
         loadAllFields();
         showToast("Datos recargados desde cartas-data.js 🔄");
       }
