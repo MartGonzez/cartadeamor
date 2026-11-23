@@ -54,11 +54,11 @@ window.CARTAS_CONFIG = {
     },
     {
       "day": 7,
-      "greeting": "Día 7: Mi promesa para ti,",
-      "body": "Esta es la séptima carta de esta sorpresa, pero quiero que sepas que cada día del año seguiré buscando formas de hacerte sonreír. Te amo hoy y siempre.",
+      "greeting": "Día 7: Mi promesa para ti",
+      "body": "Que puedo decir que no haya dicho ya, creo que ya sabes cuento te amo, cuanto te admiro, y cuan grato es estar contigo, te diré algo, hoy te diré en persona lo que en realidad siento por ti, espero que no pienses que soy cursi, pero lo soy jajaja, yo te hare la mujer mas feliz del mundo, te protegeré, seré tu hombro para llorar, no importa si discutimos o peleamos, quiero que sepas que yo nunca dejaría de hablarte y preguntarte como te fue en el día, es una promesa, te cuidare y te daré lo que mereces, eres una parte muy importante en mi vida, eres lo que todos decían y q yo nunca quise creer, eres el amor de mi vida, mi rayito de sol, prometo siempre hacerte la mujer mas feliz del mundo, me esforzare para enamorarte todos los días, y hacerte reír va incluido.\n\nEste día, en el que te tome esta foto, me di cuenta, por segunda ves, que estoy perdidamente enamorado de ti, aunque se que a veces soy muy empalagoso,  es porque te amo demasiado, me hacer reír, salir de mi zona de confort y sobre todo, superarme a mi mismo.\n\nPor eso y mucho mas\n\nTE AMO SOFI❤\n\n\n\n\n\n\nsi lees esto, en la esquina superior izquierda deberás poner un código, si lo adivinas, aparecerá algo hermoso, eso si, deberás hacerlo el día lunes 23 jiji.",
       "signature": "Por siempre tuyo ❤️",
       "photo": "assets/photo7.png",
-      "caption": "Nuestro Día 7"
+      "caption": "¿Fin del comunicado?"
     }
   ]
 };
