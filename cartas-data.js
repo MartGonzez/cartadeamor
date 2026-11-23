@@ -62,7 +62,7 @@ window.CARTAS_CONFIG = {
     }
   ],
   "day8": {
-    "secretCode": "23/11/2026",
+    "secretCode": "10082026",
     "hint": "Ingresa nuestra fecha especial para desbloquear esta sorpresa...",
     "collageTitle": "Nuestros Momentos Favoritos ❤️",
     "collageSubtitle": "Cada foto es un pedacito de nuestra historia juntos."
