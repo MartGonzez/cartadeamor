@@ -25,13 +25,13 @@
   </div>
 
   <!-- Navegación de Días (1 al 8) -->
-  <header class="day-nav">
+  <header class="day-nav no-print">
     <h1 class="day-badge-title" id="headerTitle">Carta del Día 1</h1>
     <div class="days-pills" id="daysPills"></div>
   </header>
 
   <!-- Escena del Sobre 3D (Días 1 al 7) -->
-  <main class="stage" id="envelopeStage">
+  <main class="stage no-print" id="envelopeStage">
     <div class="envelope-wrapper" id="envelope">
       <div class="envelope-back"></div>
 
@@ -63,7 +63,7 @@
   <!-- Escena Especial Día 8: Código Secreto y Collage -->
   <section class="day8-stage hidden" id="day8Stage">
     <!-- Pantalla 1: Ingreso de Código Secreto -->
-    <div class="secret-code-card" id="day8LockCard">
+    <div class="secret-code-card no-print" id="day8LockCard">
       <div class="secret-icon">🔐</div>
       <h2 class="secret-title">Código Secreto</h2>
       <p class="secret-hint" id="day8HintText">Ingresa la fecha especial para desbloquear esta sorpresa...</p>
@@ -83,20 +83,51 @@
       <button class="welcome-btn" id="unlockDay8Btn">Desbloquear Sorpresa ✨</button>
     </div>
 
-    <!-- Pantalla 2: Collage de 10 Fotos -->
-    <div class="collage-wrapper hidden" id="day8CollageWrapper">
-      <div class="collage-header">
-        <span class="letter-day-tag">Día 8 • Sorpresa Desbloqueada</span>
-        <h2 class="collage-title" id="day8CollageTitle">Nuestros Mejores Recuerdos ❤️</h2>
-        <p class="collage-subtitle" id="day8CollageSubtitle"></p>
+    <!-- Pantalla 2: Collage de 10 Fotos con Marco, Imprimir y Descargar -->
+    <div class="collage-section hidden" id="day8CollageWrapper">
+
+      <!-- Barra de herramientas (Oculta al imprimir) -->
+      <div class="collage-toolbar no-print">
+        <div class="frame-selector-group">
+          <span class="toolbar-label">Diseño de marco:</span>
+          <div class="frame-pills">
+            <button type="button" class="frame-pill active" data-frame="romantic">🌸 Romántico</button>
+            <button type="button" class="frame-pill" data-frame="vintage">📜 Vintage Dorado</button>
+            <button type="button" class="frame-pill" data-frame="night">✨ Noche Estrellada</button>
+          </div>
+        </div>
+
+        <div class="export-actions">
+          <button type="button" class="action-btn btn-print" id="printCollageBtn">🖨️ Imprimir</button>
+          <button type="button" class="action-btn btn-download" id="downloadCollageBtn">⬇️ Descargar</button>
+        </div>
       </div>
 
-      <div class="collage-grid" id="collageGrid"></div>
+      <!-- Lienzo Enmarcado del Collage (Lo que se imprime y descarga) -->
+      <div class="collage-framed-sheet frame-romantic" id="collageFramedSheet">
+        <span class="corner-ornament top-left" id="ornTL">❤</span>
+        <span class="corner-ornament top-right" id="ornTR">❤</span>
+        <span class="corner-ornament bottom-left" id="ornBL">❤</span>
+        <span class="corner-ornament bottom-right" id="ornBR">❤</span>
+
+        <div class="collage-inner-border">
+          <div class="collage-header">
+            <span class="letter-day-tag">Nuestros Recuerdos</span>
+            <h2 class="collage-title" id="day8CollageTitle">Nuestros Mejores Recuerdos ❤️</h2>
+            <p class="collage-subtitle" id="day8CollageSubtitle"></p>
+          </div>
+
+          <div class="collage-grid" id="collageGrid"></div>
+
+          <div class="collage-footer-note" id="collageFooterNote">Con todo mi amor, por siempre juntos ❤️</div>
+        </div>
+      </div>
+
     </div>
   </section>
 
   <!-- Visor en grande al tocar una foto del collage -->
-  <div class="lightbox-overlay hidden" id="photoLightbox">
+  <div class="lightbox-overlay hidden no-print" id="photoLightbox">
     <button class="lightbox-close" id="closeLightboxBtn">✕</button>
     <img id="lightboxImg" src="" alt="Recuerdo ampliado">
   </div>
@@ -107,6 +138,7 @@
 
     let unlockedDay = 1;
     let selectedDay = 1;
+    let currentFrameDesign = "romantic";
 
     function computeUnlockedDay(startDateStr) {
       const parts = startDateStr.split("-").map(Number);
@@ -199,7 +231,6 @@
       document.getElementById("day8CollageTitle").textContent = cfg8.collageTitle;
       document.getElementById("day8CollageSubtitle").textContent = cfg8.collageSubtitle || "";
 
-      // Resetear pantalla del candado
       document.getElementById("day8LockCard").classList.remove("hidden");
       document.getElementById("day8CollageWrapper").classList.add("hidden");
       document.getElementById("secretErrorMsg").classList.add("hidden");
@@ -240,9 +271,7 @@
         const basePath = `assets/colage${i}`;
         img.src = `${basePath}.png`;
         img.alt = `Recuerdo ${i}`;
-        img.loading = "lazy";
 
-        // Si no está en .png, intenta automáticamente con .jpg y luego .webp
         img.onerror = function () {
           if (!this.dataset.step) {
             this.dataset.step = "jpg";
@@ -261,6 +290,210 @@
         card.appendChild(img);
         grid.appendChild(card);
       }
+    }
+
+    // Cambio entre los 3 diseños de marco
+    document.querySelectorAll(".frame-pill").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".frame-pill").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        currentFrameDesign = btn.dataset.frame;
+
+        const sheet = document.getElementById("collageFramedSheet");
+        sheet.className = `collage-framed-sheet frame-${currentFrameDesign}`;
+
+        const symbols = {
+          romantic: "❤",
+          vintage: "❧",
+          night: "✦"
+        };
+        const sym = symbols[currentFrameDesign] || "❤";
+        ["ornTL", "ornTR", "ornBL", "ornBR"].forEach(id => {
+          document.getElementById(id).textContent = sym;
+        });
+      });
+    });
+
+    // Imprimir Collage
+    document.getElementById("printCollageBtn").addEventListener("click", () => {
+      window.print();
+    });
+
+    // Descargar Collage en alta resolución con el marco elegido
+    document.getElementById("downloadCollageBtn").addEventListener("click", async () => {
+      const btn = document.getElementById("downloadCollageBtn");
+      const originalText = btn.textContent;
+      btn.textContent = "⏳ Generando...";
+      btn.disabled = true;
+
+      try {
+        await exportCollageToPNG();
+      } catch (err) {
+        console.error(err);
+        alert("No se pudo generar la descarga automática. Puedes usar el botón Imprimir -> Guardar como PDF.");
+      } finally {
+        btn.textContent = originalText;
+        btn.disabled = false;
+      }
+    });
+
+    function drawCoverImage(ctx, img, x, y, w, h) {
+      if (!img || !img.complete || img.naturalWidth === 0) {
+        ctx.fillStyle = "#f3e8ee";
+        ctx.fillRect(x, y, w, h);
+        return;
+      }
+      const imgRatio = img.naturalWidth / img.naturalHeight;
+      const boxRatio = w / h;
+      let sx = 0, sy = 0, sw = img.naturalWidth, sh = img.naturalHeight;
+
+      if (imgRatio > boxRatio) {
+        sw = img.naturalHeight * boxRatio;
+        sx = (img.naturalWidth - sw) / 2;
+      } else {
+        sh = img.naturalWidth / boxRatio;
+        sy = (img.naturalHeight - sh) / 2;
+      }
+      ctx.drawImage(img, sx, sy, sw, sh, x, y, w, h);
+    }
+
+    async function exportCollageToPNG() {
+      const W = 1600;
+      const H = 2050;
+      const canvas = document.createElement("canvas");
+      canvas.width = W;
+      canvas.height = H;
+      const ctx = canvas.getContext("2d");
+
+      // Paletas según el diseño de marco activo
+      const palettes = {
+        romantic: {
+          outerBg: "#fff5f7",
+          innerBg: "#ffffff",
+          borderOuter: "#ff8fa3",
+          borderInner: "#ffb3c1",
+          titleColor: "#c9184a",
+          subColor: "#6d3b47",
+          cardBg: "#ffffff",
+          ornament: "❤"
+        },
+        vintage: {
+          outerBg: "#f5ead6",
+          innerBg: "#fcf8f0",
+          borderOuter: "#b5926b",
+          borderInner: "#d4af37",
+          titleColor: "#7c2d12",
+          subColor: "#5c4033",
+          cardBg: "#fffdf9",
+          ornament: "❧"
+        },
+        night: {
+          outerBg: "#0f172a",
+          innerBg: "#1e1b4b",
+          borderOuter: "#f59e0b",
+          borderInner: "#fcd34d",
+          titleColor: "#fbbf24",
+          subColor: "#e2e8f0",
+          cardBg: "#ffffff",
+          ornament: "✦"
+        }
+      };
+
+      const pal = palettes[currentFrameDesign] || palettes.romantic;
+
+      // Fondo exterior
+      ctx.fillStyle = pal.outerBg;
+      ctx.fillRect(0, 0, W, H);
+
+      // Marco exterior grueso
+      ctx.strokeStyle = pal.borderOuter;
+      ctx.lineWidth = 18;
+      ctx.strokeRect(45, 45, W - 90, H - 90);
+
+      // Fondo interior
+      ctx.fillStyle = pal.innerBg;
+      ctx.fillRect(75, 75, W - 150, H - 150);
+
+      // Segundo marco interior fino
+      ctx.strokeStyle = pal.borderInner;
+      ctx.lineWidth = 4;
+      ctx.strokeRect(85, 85, W - 170, H - 170);
+
+      // Ornamentos en las 4 esquinas
+      ctx.fillStyle = pal.titleColor;
+      ctx.font = "48px serif";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText(pal.ornament, 120, 120);
+      ctx.fillText(pal.ornament, W - 120, 120);
+      ctx.fillText(pal.ornament, 120, H - 120);
+      ctx.fillText(pal.ornament, W - 120, H - 120);
+
+      // Textos de cabecera
+      const titleText = document.getElementById("day8CollageTitle").textContent;
+      const subText = document.getElementById("day8CollageSubtitle").textContent;
+
+      ctx.fillStyle = pal.titleColor;
+      ctx.font = "bold 74px 'Dancing Script', Georgia, serif";
+      ctx.fillText(titleText, W / 2, 185);
+
+      ctx.fillStyle = pal.subColor;
+      ctx.font = "italic 30px 'Lora', Georgia, serif";
+      ctx.fillText(subText, W / 2, 248);
+
+      // Obtener las 10 imágenes cargadas en el DOM
+      const imgs = Array.from(document.querySelectorAll("#collageGrid img"));
+
+      // Distribución tipo Collage Bento 4x4 (10 fotos: #1 y #6 ocupan 2x2)
+      const gridX = 130;
+      const gridY = 310;
+      const gap = 24;
+      const cell = (W - gridX * 2 - gap * 3) / 4; // ~317px
+
+      const slots = [
+        { c: 0, r: 0, w: 2, h: 2 }, // Foto 1 grande
+        { c: 2, r: 0, w: 1, h: 1 }, // Foto 2
+        { c: 3, r: 0, w: 1, h: 1 }, // Foto 3
+        { c: 2, r: 1, w: 1, h: 1 }, // Foto 4
+        { c: 3, r: 1, w: 1, h: 1 }, // Foto 5
+        { c: 0, r: 2, w: 2, h: 2 }, // Foto 6 grande
+        { c: 2, r: 2, w: 1, h: 1 }, // Foto 7
+        { c: 3, r: 2, w: 1, h: 1 }, // Foto 8
+        { c: 2, r: 3, w: 1, h: 1 }, // Foto 9
+        { c: 3, r: 3, w: 1, h: 1 }  // Foto 10
+      ];
+
+      slots.forEach((slot, idx) => {
+        const x = gridX + slot.c * (cell + gap);
+        const y = gridY + slot.r * (cell + gap);
+        const w = slot.w * cell + (slot.w - 1) * gap;
+        const h = slot.h * cell + (slot.h - 1) * gap;
+
+        // Marco blanco tipo foto impresa
+        ctx.save();
+        ctx.shadowColor = "rgba(0,0,0,0.16)";
+        ctx.shadowBlur = 16;
+        ctx.shadowOffsetY = 6;
+        ctx.fillStyle = pal.cardBg;
+        ctx.fillRect(x, y, w, h);
+        ctx.restore();
+
+        const pad = 12;
+        drawCoverImage(ctx, imgs[idx], x + pad, y + pad, w - pad * 2, h - pad * 2);
+      });
+
+      // Dedicatoria inferior
+      ctx.fillStyle = pal.titleColor;
+      ctx.font = "600 44px 'Dancing Script', Georgia, serif";
+      ctx.fillText("Con todo mi amor, por siempre juntos ❤️", W / 2, H - 145);
+
+      // Descargar archivo PNG
+      const link = document.createElement("a");
+      link.download = `nuestro-collage-${currentFrameDesign}.png`;
+      link.href = canvas.toDataURL("image/png");
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
     }
 
     document.getElementById("unlockDay8Btn").addEventListener("click", verifySecretCode);
@@ -340,7 +573,6 @@
     applyTheme(appData.theme);
     unlockedDay = computeUnlockedDay(appData.startDate);
 
-    // Permite probar cualquier día agregando ?dia=8 a la URL
     const urlDay = Number(new URLSearchParams(window.location.search).get("dia"));
     if (urlDay >= 1 && urlDay <= 8) {
       unlockedDay = Math.max(unlockedDay, urlDay);
